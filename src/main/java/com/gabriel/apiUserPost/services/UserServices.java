@@ -31,7 +31,28 @@ public class UserServices {
 		return rep.insert(user);
 	}
 	
-	public User fromDTO (UserDTO dto) {
-		return new User(dto.getId(),dto.getName(),dto.getEmail());
+	public User update(User user) {
+		Optional<User> user1 = rep.findById(user.getId());
+	    User newUser = user1.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
+
+		updateData(newUser, user);
+		
+		return rep.save(newUser);
+	}
+
+	private void updateData(User newUser, User user) {
+
+		newUser.setName(user.getName());
+		newUser.setEmail(user.getEmail());
+
+	}
+
+	public void delete(String id) {
+		findById(id);
+		rep.deleteById(id);
+	}
+
+	public User fromDTO(UserDTO dto) {
+		return new User(dto.getId(), dto.getName(), dto.getEmail());
 	}
 }
