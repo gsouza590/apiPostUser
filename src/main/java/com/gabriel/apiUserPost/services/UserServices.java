@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gabriel.apiUserPost.dto.UserDTO;
 import com.gabriel.apiUserPost.entities.User;
 import com.gabriel.apiUserPost.repositories.UserRepository;
 import com.gabriel.apiUserPost.services.exception.ObjectNotFoundException;
@@ -15,14 +16,22 @@ public class UserServices {
 
 	@Autowired
 	private UserRepository rep;
-	
-	public List<User> findAll(){
+
+	public List<User> findAll() {
 		return rep.findAll();
 	}
-	
+
 	public User findById(String id) {
 		Optional<User> user = rep.findById(id);
+
+		return user.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
+	}
+
+	public User insert(User user) {
+		return rep.insert(user);
+	}
 	
-		return user.orElseThrow(()-> new ObjectNotFoundException("Objeto não encontrado"));
+	public User fromDTO (UserDTO dto) {
+		return new User(dto.getId(),dto.getName(),dto.getEmail());
 	}
 }
