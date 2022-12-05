@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
+import com.gabriel.apiUserPost.dto.AuthorDTO;
 import com.gabriel.apiUserPost.entities.Post;
 import com.gabriel.apiUserPost.entities.User;
 import com.gabriel.apiUserPost.repositories.PostRepository;
@@ -32,10 +33,11 @@ public class DbMock implements CommandLineRunner {
 		User maria = new User(null,"Maria","maria@gmail.com");
 		User joao = new User(null,"Joao","joao@gmail.com");
 		User carlos = new User(null,"Carlos","carlos@gmail.com");
-	
-		Post post1 = new Post(null, sdf.parse("21/03/2018"), "Partiu viagem", "Viagem Sao Paulo", maria);
-		Post post2 = new Post(null, sdf.parse("23/05/2018"), "Bom dia ", "Melhor Dia", maria);
 		userRep.saveAll(Arrays.asList(maria, joao, carlos));
+	
+		Post post1 = new Post(null, sdf.parse("21/03/2018"), "Partiu viagem", "Viagem Sao Paulo",new AuthorDTO(maria));
+		Post post2 = new Post(null, sdf.parse("23/05/2018"), "Bom dia ", "Melhor Dia", new AuthorDTO(maria));
+		
 		postRep.saveAll(Arrays.asList(post1,post2));
 	}
 
