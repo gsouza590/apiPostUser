@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.gabriel.apiUserPost.dto.UserDTO;
+import com.gabriel.apiUserPost.entities.Post;
 import com.gabriel.apiUserPost.entities.User;
 import com.gabriel.apiUserPost.services.UserServices;
 
@@ -44,6 +45,15 @@ public class UserController {
 
 	}
 
+	
+	@GetMapping(value = "/{id}/posts")
+	public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+
+		User user = service.findById(id);
+		return ResponseEntity.ok().body(user.getPosts());
+
+	}
+	
 	@PostMapping
 	public ResponseEntity<Void> insert(@RequestBody UserDTO form) {
 		User user = service.fromDTO(form);
@@ -71,5 +81,6 @@ public class UserController {
 		return ResponseEntity.noContent().build();
 
 	}
+	
 	
 }
