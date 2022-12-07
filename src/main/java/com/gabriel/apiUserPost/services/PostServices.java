@@ -37,6 +37,28 @@ public class PostServices {
 		return rep.fullSearch(text, minDate, maxDate);
 		
 	}
+	
+	
+	public void delete(String id) {
+		findById(id);
+		rep.deleteById(id);
+	}
+	
+	public Post update(Post post) {
+		Optional<Post> post1 = rep.findById(post.getId());
+	    Post newPost = post1.orElseThrow(() -> new ObjectNotFoundException("Post não encontrado"));
+
+		updateData(newPost, post);
+		
+		return rep.save(newPost);
+	}
+	
+	private void updateData (Post newPost, Post post) {
+
+		newPost.setBody(post.getBody());
+		newPost.setTitle(post.getTitle());
+
+	}
 
 	public Post fromDTO(PostDTO dto) {
 		return new Post(dto.getId(), dto.getDate(),dto.getBody(),dto.getTitle(),dto.getAuthor());
