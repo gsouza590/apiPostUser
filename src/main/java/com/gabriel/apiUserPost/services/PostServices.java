@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gabriel.apiUserPost.dto.PostDTO;
 import com.gabriel.apiUserPost.entities.Post;
 import com.gabriel.apiUserPost.repositories.PostRepository;
 import com.gabriel.apiUserPost.services.exception.ObjectNotFoundException;
@@ -17,6 +18,10 @@ public class PostServices {
 	@Autowired
 	private PostRepository rep;
 
+	
+	public Post insert (Post post) {
+		return rep.insert(post);
+	}
 	
 	public Post findById(String id) {
 		Optional<Post> post = rep.findById(id);
@@ -31,6 +36,10 @@ public class PostServices {
 		maxDate = new Date (maxDate.getTime()+ 24*60*60*1000);
 		return rep.fullSearch(text, minDate, maxDate);
 		
+	}
+
+	public Post fromDTO(PostDTO dto) {
+		return new Post(dto.getId(), dto.getDate(),dto.getBody(),dto.getTitle(),dto.getAuthor());
 	}
 	
 	
