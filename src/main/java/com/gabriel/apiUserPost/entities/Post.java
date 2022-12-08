@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.gabriel.apiUserPost.dto.AuthorDTO;
 import com.gabriel.apiUserPost.dto.CommentDTO;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,7 @@ public class Post implements Serializable{
 	private String title;
 	private String body;
 	private AuthorDTO author;
+	
 	
 	private List<CommentDTO> comments = new ArrayList<CommentDTO>();
 

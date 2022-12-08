@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.gabriel.apiUserPost.entities.Post;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,6 +29,16 @@ public class PostDTO {
 		this.title = title;
 		this.body = body;
 		this.author = author;
+	}
+
+	public PostDTO(Post post) {
+		
+		id= post.getId();
+		date= post.getDate();
+		title=post.getTitle();
+		body=post.getBody();
+		author=post.getAuthor();
+		comments=post.getComments();
 	} 
 	
 	
