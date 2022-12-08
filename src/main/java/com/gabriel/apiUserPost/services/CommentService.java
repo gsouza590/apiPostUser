@@ -18,6 +18,10 @@ public class CommentService {
 	CommentRepository rep;
 	
 	
+	public Comment insert (Comment comment) {
+		return rep.insert(comment);
+	}
+	
 	public List<Comment> findAll() {
 		return rep.findAll();
 	}
@@ -28,11 +32,31 @@ public class CommentService {
 		return comment.orElseThrow(() -> new ObjectNotFoundException("Comentário não encontrado"));
 		}
 	
-	public Comment insert (Comment comment) {
-		return rep.insert(comment);
+
+	public void delete(String id) {
+		findById(id);
+		rep.deleteById(id);
 	}
 
+	public Comment update(Comment comment) {
+		Optional<Comment> comment1 = rep.findById(comment.getId());
+		Comment newcomment = comment1.orElseThrow(() -> new ObjectNotFoundException("Comentário não encontrado"));
 
+		updateData(newcomment, comment);
+
+		return rep.save(newcomment);
+	}
+
+	private void updateData(Comment newcomment, Comment comment) {
+
+		newcomment.setText(comment.getText());
+
+	}
+	
+	
+	
+	
+	
 	public Comment fromDTO(CommentDTO dto) {
 		
 		return new Comment(dto.getId(), dto.getText(),dto.getDate(),dto.getAuthor());
