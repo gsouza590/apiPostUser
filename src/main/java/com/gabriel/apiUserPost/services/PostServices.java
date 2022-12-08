@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gabriel.apiUserPost.dto.CommentDTO;
 import com.gabriel.apiUserPost.dto.PostDTO;
 import com.gabriel.apiUserPost.entities.Post;
 import com.gabriel.apiUserPost.repositories.PostRepository;
@@ -18,42 +19,40 @@ public class PostServices {
 	@Autowired
 	private PostRepository rep;
 
-	
-	public Post insert (Post post) {
+	public Post insert(Post post) {
 		return rep.insert(post);
 	}
-	
+
 	public Post findById(String id) {
 		Optional<Post> post = rep.findById(id);
 		return post.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 	}
-	
-	public List<Post> findByTitle(String text){
+
+	public List<Post> findByTitle(String text) {
 		return rep.findByTitleContainingIgnoreCase(text);
 	}
-	
-	public List<Post> fullSearch(String text, Date minDate, Date maxDate ){
-		maxDate = new Date (maxDate.getTime()+ 24*60*60*1000);
+
+	public List<Post> fullSearch(String text, Date minDate, Date maxDate) {
+		maxDate = new Date(maxDate.getTime() + 24 * 60 * 60 * 1000);
 		return rep.fullSearch(text, minDate, maxDate);
-		
+
 	}
-	
-	
+
 	public void delete(String id) {
 		findById(id);
 		rep.deleteById(id);
 	}
-	
+
 	public Post update(Post post) {
 		Optional<Post> post1 = rep.findById(post.getId());
-	    Post newPost = post1.orElseThrow(() -> new ObjectNotFoundException("Post não encontrado"));
+		Post newPost = post1.orElseThrow(() -> new ObjectNotFoundException("Post não encontrado"));
 
 		updateData(newPost, post);
-		
+
 		return rep.save(newPost);
 	}
-	
-	private void updateData (Post newPost, Post post) {
+
+	private void updateData(Post newPost, Post post) {
 
 		newPost.setBody(post.getBody());
 		newPost.setTitle(post.getTitle());
@@ -61,9 +60,17 @@ public class PostServices {
 	}
 
 	public Post fromDTO(PostDTO dto) {
-		return new Post(dto.getId(), dto.getDate(),dto.getBody(),dto.getTitle(),dto.getAuthor());
+		return new Post(dto.getId(), dto.getDate(), dto.getBody(), dto.getTitle(), dto.getAuthor());
 	}
-	
-	
-	
+
+	public Post addComment(Post post, CommentDTO comment) {
+
+		Optional<Post> post1 = rep.findById(post.getId());
+		Post newPost = post1.orElseThrow(() -> new ObjectNotFoundException("Post não encontrado"));
+
+		newPost.getComments().add(comment);
+		return rep.save(newPost);
+
+	}
+
 }

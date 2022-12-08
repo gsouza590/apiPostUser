@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gabriel.apiUserPost.dto.CommentDTO;
 import com.gabriel.apiUserPost.entities.Comment;
 import com.gabriel.apiUserPost.repositories.CommentRepository;
 import com.gabriel.apiUserPost.services.exception.ObjectNotFoundException;
@@ -26,4 +27,14 @@ public class CommentService {
 		Optional<Comment> comment = rep.findById(id);
 		return comment.orElseThrow(() -> new ObjectNotFoundException("Comentário não encontrado"));
 		}
+	
+	public Comment insert (Comment comment) {
+		return rep.insert(comment);
+	}
+
+
+	public Comment fromDTO(CommentDTO dto) {
+		
+		return new Comment(dto.getId(), dto.getText(),dto.getDate(),dto.getAuthor());
+	}
 }
