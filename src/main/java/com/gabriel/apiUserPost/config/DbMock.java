@@ -36,9 +36,9 @@ public class DbMock implements CommandLineRunner {
 		postRep.deleteAll();
 		comRep.deleteAll();
 		
-		User maria = new User(null,"Maria","maria@gmail.com");
-		User joao = new User(null,"Joao","joao@gmail.com");
-		User carlos = new User(null,"Carlos","carlos@gmail.com");
+		User maria = new User(null,"Maria","maria@gmail.com","$2a$10$Y50UaMFOxteibQEYLrwuHeehHYfcoafCopUazP12.rqB41bsolF5.");
+		User joao = new User(null,"Joao","joao@gmail.com","$2a$10$Y50UaMFOxteibQEYLrwuHeehHYfcoafCopUazP12.rqB41bsolF5.");
+		User carlos = new User(null,"Carlos","carlos@gmail.com","$2a$10$Y50UaMFOxteibQEYLrwuHeehHYfcoafCopUazP12.rqB41bsolF5.");
 		userRep.saveAll(Arrays.asList(maria, joao, carlos));
 	
 		Post post1 = new Post(null, sdf.parse("21/03/2018"), "Partiu viagem", "Viagem Sao Paulo",new AuthorDTO(maria));

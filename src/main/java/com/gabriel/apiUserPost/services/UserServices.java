@@ -53,6 +53,6 @@ public class UserServices {
 	}
 
 	public User fromDTO(UserDTO dto) {
-		return new User(dto.getId(), dto.getName(), dto.getEmail());
+		return new User(dto.getId(), dto.getName(), dto.getEmail(), dto.getSenha());
 	}
 }
