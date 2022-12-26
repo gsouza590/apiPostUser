@@ -15,7 +15,11 @@ Uma API que consiste em CRUD de Usuarios e Posts e  Comentários.
 # Tecnologias utilizadas
 ## Back end
 - Java
-- Spring Boot
+- Spring Boot (Security, Swagger)
 - JPA / Hibernate
 - Maven
 - Banco de Dados : MongoDb
+
+# Autor
+
+Gabriel Domiciano de Souza
