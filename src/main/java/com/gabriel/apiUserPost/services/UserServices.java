@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.gabriel.apiUserPost.dto.UserDTO;
@@ -16,7 +17,10 @@ public class UserServices {
 
 	@Autowired
 	private UserRepository rep;
-
+	
+	@Autowired
+	PasswordEncoder passwordEncoder;
+	
 	public List<User> findAll() {
 		return rep.findAll();
 	}
@@ -28,6 +32,8 @@ public class UserServices {
 	}
 
 	public User insert(User user) {
+		String encodedPassword=this.passwordEncoder.encode(user.getSenha());
+		user.setSenha(encodedPassword);
 		return rep.insert(user);
 	}
 	
