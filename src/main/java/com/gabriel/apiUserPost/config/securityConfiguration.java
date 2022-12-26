@@ -29,6 +29,7 @@ public class securityConfiguration {
 				.and().authorizeRequests()
 				.antMatchers(HttpMethod.POST, "/login").permitAll()
 				.antMatchers(HttpMethod.POST, "/users").permitAll()
+				.antMatchers("/**.html", "/v2/api-docs", "/webjars/**","/configuration/**", "/swagger-resources/**").permitAll()
 				.anyRequest().authenticated()
 				.and().addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class).build();
 
@@ -39,6 +40,8 @@ public class securityConfiguration {
 		return configuration.getAuthenticationManager();
 	}
 
+	
+	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();

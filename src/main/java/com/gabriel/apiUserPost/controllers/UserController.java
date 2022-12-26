@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -55,7 +57,7 @@ public class UserController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Void> insert(@RequestBody UserDTO form) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody UserDTO form) {
 		User user = service.fromDTO(form);
 		user = service.insert(user);
 
